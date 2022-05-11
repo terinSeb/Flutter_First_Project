@@ -10,16 +10,16 @@ class MyApp extends StatefulWidget{
 
 @override
 State<StatefulWidget> createState(){
-  return MyAppState();
+  return _MyAppState();
 }
 }
-class MyAppState extends State<MyApp>{
+class _MyAppState extends State<MyApp>{
   
-  var questionInex = 0;
+  var _questionInex = 0;
   
-  void answerQuestion(){
+  void _answerQuestion(){
     setState((){
-questionInex = questionInex +1;
+_questionInex = _questionInex +1;
   });
   
   debugPrint('Answer Choosen');
@@ -27,7 +27,7 @@ questionInex = questionInex +1;
 
   @override
   Widget build(BuildContext context){
-    var questions =[
+    var _questions =[
       'What\'s you favourite color?',
       'What\'s you favourite animal?'
     ];
@@ -35,9 +35,9 @@ questionInex = questionInex +1;
       appBar: AppBar(title: const Text('My First App'),),
       body: Column(
         children:  [
-           Text(questions[questionInex]),
+           Text(_questions[_questionInex]),
           ElevatedButton(child: const Text('Answer 1'),
-          onPressed: answerQuestion,),
+          onPressed: _answerQuestion,),
            ElevatedButton(child: const Text('Answer 2'),
           onPressed: ()=> debugPrint('Answer Choosen 2') ,),
            ElevatedButton(child: const Text('Answer 3'),
