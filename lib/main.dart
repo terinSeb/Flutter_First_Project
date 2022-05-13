@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/question.dart';
+
+import 'answer.dart';
 
 void main(){
 runApp(  const MyApp());
@@ -28,22 +31,24 @@ _questionInex = _questionInex +1;
   @override
   Widget build(BuildContext context){
     var _questions =[
-      'What\'s you favourite color?',
-      'What\'s you favourite animal?'
+      {'questionText': 'What\'s you favourite color?',
+      'answers': ['Bule','Black','Green','Orange']},
+       {'questionText': 'What\'s you favourite animal?',
+      'answers': ['Girraff','Rabbit','Dog','Cat']}    ,
+      {'questionText': 'Who\'s your favourite instructor?',
+      'answers': ['Max','Sam','Liza','John']}            
     ];
     return   MaterialApp(home: Scaffold(
       appBar: AppBar(title: const Text('My First App'),),
       body: Column(
         children:  [
-           Text(_questions[_questionInex]),
-          ElevatedButton(child: const Text('Answer 1'),
-          onPressed: _answerQuestion,),
-           ElevatedButton(child: const Text('Answer 2'),
-          onPressed: ()=> debugPrint('Answer Choosen 2') ,),
-           ElevatedButton(child: const Text('Answer 3'),
-          onPressed: () {
-            debugPrint('Answer Choosen 3');
-          },)
+           Question(questionText :_questions[_questionInex]['questionText'] as String, ),
+           ...(_questions[_questionInex]['answers'] as List<String>).map((questAnswer) {
+return Answer(selectHandler: _answerQuestion,finalAnswer: questAnswer, );
+           }).toList(),
+          // Answer(selectHandler: _answerQuestion, ),
+          //  Answer(selectHandler: _answerQuestion),
+          //  Answer(selectHandler: _answerQuestion),
         ],
       ),
       ), );
