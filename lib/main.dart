@@ -17,7 +17,14 @@ State<StatefulWidget> createState(){
 }
 }
 class _MyAppState extends State<MyApp>{
-  
+  final _questions = const [
+      {'questionText': 'What\'s you favourite color?',
+      'answers': ['Bule','Black','Green','Orange']},
+       {'questionText': 'What\'s you favourite animal?',
+      'answers': ['Girraff','Rabbit','Dog','Cat']}    ,
+      {'questionText': 'Who\'s your favourite instructor?',
+      'answers': ['Max','Sam','Liza','John']}            
+    ];
   var _questionInex = 0;
   
   void _answerQuestion(){
@@ -26,21 +33,18 @@ _questionInex = _questionInex +1;
   });
   
   debugPrint('Answer Choosen');
+
+  if(_questionInex < _questions.length){
+    debugPrint('We have more Questions');
+  }
 }
 
   @override
   Widget build(BuildContext context){
-    var _questions =[
-      {'questionText': 'What\'s you favourite color?',
-      'answers': ['Bule','Black','Green','Orange']},
-       {'questionText': 'What\'s you favourite animal?',
-      'answers': ['Girraff','Rabbit','Dog','Cat']}    ,
-      {'questionText': 'Who\'s your favourite instructor?',
-      'answers': ['Max','Sam','Liza','John']}            
-    ];
+    
     return   MaterialApp(home: Scaffold(
       appBar: AppBar(title: const Text('My First App'),),
-      body: Column(
+      body: _questionInex < _questions.length ? Column(
         children:  [
            Question(questionText :_questions[_questionInex]['questionText'] as String, ),
            ...(_questions[_questionInex]['answers'] as List<String>).map((questAnswer) {
@@ -50,7 +54,7 @@ return Answer(selectHandler: _answerQuestion,finalAnswer: questAnswer, );
           //  Answer(selectHandler: _answerQuestion),
           //  Answer(selectHandler: _answerQuestion),
         ],
-      ),
+      ) : const Center(child: Text('You did it'),),
       ), );
   }
 }
