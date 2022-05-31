@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/question.dart';
+import 'package:flutter_complete_guide/quiz.dart';
+import 'package:flutter_complete_guide/result.dart';
 
-import 'answer.dart';
 
 void main(){
 runApp(  const MyApp());
@@ -19,17 +19,18 @@ State<StatefulWidget> createState(){
 class _MyAppState extends State<MyApp>{
   final _questions = const [
       {'questionText': 'What\'s you favourite color?',
-      'answers': ['Bule','Black','Green','Orange']},
+      'answers': [{'text': 'Bule','score':1},{'text':'Black','score':10},{'text':'Green','score':2},{'text':'Orange','score':1}]},
        {'questionText': 'What\'s you favourite animal?',
-      'answers': ['Girraff','Rabbit','Dog','Cat']}    ,
+      'answers': [{'text': 'Girraff','score':10},{'text': 'Rabbit','score':7},{'text': 'Dog','score':1},{'text': 'Cat','score':3}]}    ,
       {'questionText': 'Who\'s your favourite instructor?',
-      'answers': ['Max','Sam','Liza','John']}            
+      'answers': [{'text': 'Max','score':10},{'text': 'Sam','score':7},{'text': 'Liza','score':5},{'text': 'John','score':3}]}            
     ];
   var _questionInex = 0;
-  
-  void _answerQuestion(){
+  int _totalScore = 0;
+  void _answerQuestion(int score){
     setState((){
-_questionInex = _questionInex +1;
+        _questionInex = _questionInex +1;
+        _totalScore = _totalScore + score;
   });
   
   debugPrint('Answer Choosen');
@@ -44,17 +45,9 @@ _questionInex = _questionInex +1;
     
     return   MaterialApp(home: Scaffold(
       appBar: AppBar(title: const Text('My First App'),),
-      body: _questionInex < _questions.length ? Column(
-        children:  [
-           Question(questionText :_questions[_questionInex]['questionText'] as String, ),
-           ...(_questions[_questionInex]['answers'] as List<String>).map((questAnswer) {
-return Answer(selectHandler: _answerQuestion,finalAnswer: questAnswer, );
-           }).toList(),
-          // Answer(selectHandler: _answerQuestion, ),
-          //  Answer(selectHandler: _answerQuestion),
-          //  Answer(selectHandler: _answerQuestion),
-        ],
-      ) : const Center(child: Text('You did it'),),
+      body: _questionInex < _questions.length ? 
+      Quiz(questions: _questions,answerQuestion:  _answerQuestion,questionInex: _questionInex,) 
+      :  Result(resultScore:_totalScore,),
       ), );
   }
 }
