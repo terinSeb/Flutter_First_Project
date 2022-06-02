@@ -27,6 +27,12 @@ class _MyAppState extends State<MyApp>{
     ];
   var _questionInex = 0;
   int _totalScore = 0;
+  void resetQuiz(){
+    setState(() {
+      _questionInex =0;
+      _totalScore =0;
+    });
+  }
   void _answerQuestion(int score){
     setState((){
         _questionInex = _questionInex +1;
@@ -47,7 +53,7 @@ class _MyAppState extends State<MyApp>{
       appBar: AppBar(title: const Text('My First App'),),
       body: _questionInex < _questions.length ? 
       Quiz(questions: _questions,answerQuestion:  _answerQuestion,questionInex: _questionInex,) 
-      :  Result(resultScore:_totalScore,),
+      :  Result(resultScore:_totalScore,selectHandler: resetQuiz,),
       ), );
   }
 }
